@@ -32,7 +32,7 @@ jobs:
       # Set Base Ref from "/" to "./"
       # - run:   sed -i -e '101a<script src="main.dart.js?version=${{ github.run_number }}" type="application/javascript"></script>' build/web/index.html
       - name: Github Pages Deploy
-        uses: JamesIves/github-pages-deploy-action@4.6.4
+        uses: JamesIves/github-pages-deploy-action@920cbb300dcd3f0568dbc42700c61e2fd9e6139c
         with:
           branch: gh-pages
           token: ${{ secrets.GITHUB_TOKEN }}
