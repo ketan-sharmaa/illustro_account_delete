@@ -27,7 +27,7 @@ class _MainAppState extends State<MainApp> {
                 controller: controller,
               ),
               ElevatedButton(
-                  onPressed: () async { 
+                  onPressed: () async {  
                     try {
                       final ref = await FirebaseFirestore.instance
                           .collection('deleted_accounts');
