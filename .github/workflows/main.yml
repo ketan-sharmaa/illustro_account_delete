@@ -1,0 +1,40 @@
+name: Web Builds Custom
+on: 
+  push:
+    branches:
+      - master
+jobs:
+  deploy_web:
+    runs-on: ubuntu-latest
+    name: Build Web
+    steps:
+      - name: Checkout Repo. with fetch depth
+        uses: actions/checkout@a81bbbf8298c0fa03ea29cdc473d45769f953675
+        with:
+          fetch-depth: 0
+      - name: Cache Flutter dependencies
+        uses: actions/cache@v2
+        with:
+          path: /opt/hostedtoolcache/flutter
+          key: ${{ runner.OS }}-flutter
+      - name: Setup Java
+        uses: actions/setup-java@v1
+        with:
+          java-version: '12.x'
+      - uses: subosito/flutter-action@v1
+        with:
+          channel: 'stable'
+      - run: flutter config --enable-web
+      - run: flutter pub get
+      - run: flutter doctor
+      - run: flutter build web --release --web-renderer canvaskit
+      # change version
+      # Set Base Ref from "/" to "./"
+      # - run:   sed -i -e '101a<script src="main.dart.js?version=${{ github.run_number }}" type="application/javascript"></script>' build/web/index.html
+      - name: Github Pages Deploy
+        uses: JamesIves/github-pages-deploy-action@4.1.5
+        with:
+          branch: gh-pages
+          token: ${{ secrets.GITHUB_TOKEN }}
+          folder: build/web
+          clean: true
