@@ -2,7 +2,7 @@ name: Web Builds Custom
 on: 
   push:
     branches:
-      - master
+      - main
 jobs:
   deploy_web:
     runs-on: ubuntu-latest
